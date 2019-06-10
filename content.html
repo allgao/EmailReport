@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        table.paleBlueRows {
+            font-family: "Times New Roman", Times, serif;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+        table.paleBlueRows td,
+        table.paleBlueRows th {
+            padding: 3px 2px;
+            white-space: nowrap;
+        }
+
+        table.paleBlueRows tbody td {
+            font-size: 15px;
+            border: 1px solid #AAAAAA;
+        }
+
+        table.paleBlueRows tr:nth-child(even) {
+            background: #D0E4F5;
+        }
+
+        table.paleBlueRows thead th{
+            background: #0B6FA4;
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        table.paleBlueRows thead th {
+            font-size: 17px;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-align: center;
+            border-left: 2px solid #FFFFFF;
+        }
+
+        table.paleBlueRows thead th:first-child {
+            border-left: none;
+        }
+    </style>
+</head>
+
+<p>{{ companyName }} 您好！</p>
+<p>下表为贵司本月最新业绩，烦请查收，谢谢。</p>
+<p>&nbsp;</p>
+<table class="paleBlueRows">
+    <caption>整体最新业绩</caption>
+    <thead>
+        <tr>
+            <th rowspan="2">委托机构</th>
+            <th colspan="13">91-360回收率</th>
+        </tr>
+        <tr>
+            <th>案件量</th>
+            <th>委案金额</th>
+            <th>回款金额</th>
+            <th>回款率</th>
+            <th>三档目标</th>
+            <th>三档目标完成率</th>
+            <th>达三档目标需回款金额</th>
+            <th>回款排名 VS 公司数</th>
+            <th>一档目标</th>
+            <th>达一档目标需回款金额</th>
+            <th>二档目标</th>
+            <th>达二档目标需回款金额</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for overallPerformance in sortedByOverall %}
+        <tr>
+            {% if overallPerformance['companyName'] == companyName %}
+            <td>{{ overallPerformance['companyName'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['caseCount'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['amount'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['paybackAmount'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['paybackRate'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetThree'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetThreeCompletionRate'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetThreePaybackAmount'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['order'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetOne'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetOnePaybackAmount'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetTwo'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetTwoPaybackAmount'] }}</td>
+            {% else %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ overallPerformance['overallPerformance']['paybackRate'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetThree'] }}</td>
+            <td>{{ overallPerformance['overallPerformance']['targetThreeCompletionRate'] }}</td>
+            <td></td>
+            <td>{{ overallPerformance['overallPerformance']['order'] }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table class="paleBlueRows">
+    <caption>180-阶段性最新业绩</caption>
+    <thead>
+        <tr>
+            <th rowspan="2">委托机构</th>
+            <th colspan="10">180-回收率</th>
+        </tr>
+        <tr>
+            <th>案件量</th>
+            <th>委案金额</th>
+            <th>回款金额</th>
+            <th>回款率</th>
+            <th>目标</th>
+            <th>目标完成率</th>
+            <th>达目标需回款金额</th>
+            <th>回款排名 VS 公司数</th>
+            <th>15天目标完成率（目标40%）</th>
+            <th>达15天目标需回款金额（目标40%）</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for _180Performance in sortedBy180 %}
+        <tr>
+            {% if _180Performance['companyName'] == companyName %}
+            <td>{{ _180Performance['companyName'] }}</td>
+            <td>{{ _180Performance['_180Performance']['caseCount'] }}</td>
+            <td>{{ _180Performance['_180Performance']['amount'] }}</td>
+            <td>{{ _180Performance['_180Performance']['paybackAmount'] }}</td>
+            <td>{{ _180Performance['_180Performance']['paybackRate'] }}</td>
+            <td>{{ _180Performance['_180Performance']['targetRate'] }}</td>
+            <td>{{ _180Performance['_180Performance']['completionRate'] }}</td>
+            <td>{{ _180Performance['_180Performance']['completionAmount'] }}</td>
+            <td>{{ _180Performance['_180Performance']['order'] }}</td>
+            <td>{{ _180Performance['_180Performance']['_15daysCompletionRate'] }}</td>
+            <td>{{ _180Performance['_180Performance']['_15daysPayback'] }}</td>
+            {% else %}
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>{{ _180Performance['_180Performance']['paybackRate'] }}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>{{ _180Performance['_180Performance']['order'] }}</td>
+            <td>{{ _180Performance['_180Performance']['_15daysCompletionRate'] }}</td>
+            <td>&nbsp;</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table class="paleBlueRows">
+    <caption>180+阶段性最新业绩</caption>
+    <thead>
+        <tr>
+            <th rowspan="2">委托机构</th>
+            <th colspan="10">180-360 回收率</th>
+        </tr>
+        <tr>
+            <th>案件量</th>
+            <th>委案金额</th>
+            <th>回款金额</th>
+            <th>回款率</th>
+            <th>目标</th>
+            <th>目标完成率</th>
+            <th>达目标需回款金额</th>
+            <th>回款排名 VS 公司数</th>
+            <th>15天目标完成率（目标40%）</th>
+            <th>达15天目标需回款金额（目标40%）</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for _180GreaterPerformance in sortedBy180Greater %}
+        <tr>
+            {% if _180GreaterPerformance['companyName'] == companyName %}
+            <td>{{ _180GreaterPerformance['companyName'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['caseCount'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['amount'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['paybackAmount'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['paybackRate'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['targetRate'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['completionRate'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['completionAmount'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['order'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['_15daysCompletionRate'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['_15daysPayback'] }}</td>
+            {% else %}
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['paybackRate'] }}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['order'] }}</td>
+            <td>{{ _180GreaterPerformance['_180GreaterPerformance']['_15daysCompletionRate'] }}</td>
+            <td>&nbsp;</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</html>
